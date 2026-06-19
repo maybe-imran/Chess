@@ -1,0 +1,6 @@
+{
+  "name": "Chess Game",
+  "description": "A fully functional flat 2D local 2-player chess game with standard rule enforcement, checkmate/stalemate detection, captured pieces display, and a new game button.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

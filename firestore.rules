@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Rooms collection for the online multiplayer rules engine
+    match /rooms/{roomId} {
+      allow read, write: if true;
+    }
+
+    // User profiles for logged in players
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Matchmaking queue collection
+    match /matchmaking_queue/{userId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

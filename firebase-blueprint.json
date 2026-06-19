@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with display name and placeholder stats",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The unique user's firebase UID"
+        },
+        "username": {
+          "type": "string",
+          "description": "The chosen display name of the user"
+        },
+        "createdAt": {
+          "type": "integer",
+          "description": "Timestamp of account creation"
+        },
+        "statsPlaceholder": {
+          "type": "object",
+          "description": "Placeholder stats for games played/won/lost"
+        }
+      },
+      "required": ["uid", "username", "createdAt"]
+    },
+    "OnlineRoom": {
+      "title": "OnlineRoom",
+      "description": "An online real-time chess room",
+      "type": "object",
+      "properties": {
+        "roomId": {
+          "type": "string"
+        },
+        "fen": {
+          "type": "string"
+        },
+        "whitePlayerId": {
+          "type": "string"
+        },
+        "blackPlayerId": {
+          "type": "string"
+        },
+        "whitePlayerName": {
+          "type": "string"
+        },
+        "blackPlayerName": {
+          "type": "string"
+        },
+        "whiteLastActive": {
+          "type": "integer"
+        },
+        "blackLastActive": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "moveCount": {
+          "type": "integer"
+        },
+        "creatorId": {
+          "type": "string"
+        }
+      },
+      "required": ["roomId", "fen", "status", "moveCount"]
+    },
+    "MatchmakingQueue": {
+      "title": "MatchmakingQueue",
+      "description": "Information about a player in the matchmaking search queue",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "matchedWith": {
+          "type": "string"
+        },
+        "matchedWithName": {
+          "type": "string"
+        },
+        "roomId": {
+          "type": "string"
+        },
+        "assignedColor": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer"
+        }
+      },
+      "required": ["userId", "username", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles containing display name and placeholder stats"
+    },
+    "/rooms/{roomId}": {
+      "schema": "OnlineRoom",
+      "description": "Chess multiplayer match rooms"
+    },
+    "/matchmaking_queue/{userId}": {
+      "schema": "MatchmakingQueue",
+      "description": "Active matchmaking queue entries for users searching for random opponents"
+    }
+  }
+}
