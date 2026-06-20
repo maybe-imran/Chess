@@ -175,6 +175,7 @@ export default function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [authInitialized, setAuthInitialized] = useState(false);
 
   // Online Multiplayer Settings
   const [roomCode, setRoomCode] = useState<string>('');
@@ -412,6 +413,7 @@ export default function App() {
       } else {
         setUserProfile(null);
       }
+      setAuthInitialized(true);
     });
     return () => unsubscribe();
   }, []);
@@ -434,19 +436,22 @@ export default function App() {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const roomParam = searchParams.get('room');
-    if (roomParam) {
+    if (roomParam && authInitialized) {
       const upperRoom = roomParam.trim().toUpperCase();
       setMode('online');
       setInputRoomCode(upperRoom);
       
-      // Auto-join online room if there is an active logged-in user
-      if (user && userProfile && upperRoom.length === 6 && !roomCode) {
+      // Auto-join online room (requires logged-in user)
+      if (upperRoom.length === 6 && !roomCode && user && userProfile) {
+        const activePlayerId = user.uid;
+        const activePlayerName = userProfile.username;
+
         const autoJoin = async () => {
-          const joinedRoom = await joinOnlineRoom(upperRoom, user.uid, userProfile.username);
+          const joinedRoom = await joinOnlineRoom(upperRoom, activePlayerId, activePlayerName);
           if (joinedRoom) {
             setRoomCode(upperRoom);
             setRoom(joinedRoom);
-            const color = joinedRoom.whitePlayerId === user.uid ? 'w' : 'b';
+            const color = joinedRoom.whitePlayerId === activePlayerId ? 'w' : 'b';
             setPlayerColor(color);
             setGame(new Chess(joinedRoom.fen));
             setMoveCount(joinedRoom.moveCount);
@@ -457,7 +462,7 @@ export default function App() {
         autoJoin();
       }
     }
-  }, [playerId, user, userProfile, roomCode]);
+  }, [playerId, user, userProfile, roomCode, authInitialized]);
 
   // 2. Real-time Firebase Firestore database listener for the active online room
   useEffect(() => {
@@ -811,6 +816,7 @@ export default function App() {
               moveCount: 0,
               lastMove: null,
               creatorId: myId,
+              currentTurn: 'w',
               history: []
             };
             transaction.set(roomRef, roomData);

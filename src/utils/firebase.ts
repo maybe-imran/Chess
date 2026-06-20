@@ -94,6 +94,7 @@ export interface OnlineRoom {
     timestamp: number;
   } | null;
   creatorId: string;
+  currentTurn: 'w' | 'b';
   history?: string[];
   resignedColor?: 'w' | 'b' | null;
   messages?: ChatMessage[];
@@ -121,6 +122,7 @@ export async function createOnlineRoom(
     moveCount: 0,
     lastMove: null,
     creatorId,
+    currentTurn: 'w',
     history: []
   };
 
@@ -193,12 +195,15 @@ export async function updateRoomBoard(
   from: string, 
   to: string, 
   promotion?: 'q' | 'r' | 'b' | 'n',
-  history?: string[]
+  history?: string[],
+  nextTurn?: 'w' | 'b'
 ): Promise<void> {
   const roomRef = doc(db, 'rooms', roomId);
+  const calculatedTurn = nextTurn || (fen.split(' ')[1] as 'w' | 'b' || 'w');
   const updates: any = {
     fen,
     moveCount,
+    currentTurn: calculatedTurn,
     lastMove: {
       from,
       to,
