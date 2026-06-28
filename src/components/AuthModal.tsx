@@ -265,12 +265,12 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="relative w-full max-w-md bg-white border border-slate-200 shadow-2xl rounded-2xl p-6 md:p-8 overflow-hidden font-sans text-slate-800"
+        className="relative w-full max-w-md bg-white dark:bg-[#151f32] border border-slate-200 dark:border-slate-800 shadow-2xl rounded-2xl p-6 md:p-8 overflow-hidden font-sans text-slate-800 dark:text-slate-100"
       >
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-650 transition-colors p-1.5 rounded-full hover:bg-slate-50 cursor-pointer"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-650 dark:hover:text-slate-200 transition-colors p-1.5 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
           disabled={loading}
         >
           <X className="w-5 h-5" />
@@ -280,20 +280,20 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
         <div className="mb-6 text-center">
           {tab === 'login' && (
             <>
-              <h2 className="text-xl font-light tracking-tight uppercase">Login to Chess</h2>
-              <p className="text-xs text-slate-400 mt-1">Access real-time sync and custom profiles</p>
+              <h2 className="text-xl font-light tracking-tight uppercase text-slate-800 dark:text-slate-100">Login to Chess</h2>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Access real-time sync and custom profiles</p>
             </>
           )}
           {tab === 'signup' && (
             <>
-              <h2 className="text-xl font-light tracking-tight uppercase">Create Account</h2>
-              <p className="text-xs text-slate-400 mt-1">Register for global matching and scores</p>
+              <h2 className="text-xl font-light tracking-tight uppercase text-slate-800 dark:text-slate-100">Create Account</h2>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Register for global matching and scores</p>
             </>
           )}
           {tab === 'forgot' && (
             <>
-              <h2 className="text-xl font-light tracking-tight uppercase">Reset Password</h2>
-              <p className="text-xs text-slate-400 mt-1">Send recovery email link immediately</p>
+              <h2 className="text-xl font-light tracking-tight uppercase text-slate-800 dark:text-slate-100">Reset Password</h2>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Send recovery email link immediately</p>
             </>
           )}
         </div>
@@ -326,12 +326,12 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
 
         {/* Tab Selection */}
         {tab !== 'forgot' && (
-          <div className="flex border-b border-slate-100 mb-6 font-mono text-xs font-bold uppercase tracking-wider">
+          <div className="flex border-b border-slate-100 dark:border-slate-800 mb-6 font-mono text-xs font-bold uppercase tracking-wider">
             <button
-              onClick={() => handleTabChange('login')}
+               onClick={() => handleTabChange('login')}
               disabled={loading}
               className={`flex-1 pb-2.5 text-center transition-colors cursor-pointer border-b-2 ${
-                tab === 'login' ? 'border-slate-800 text-slate-850' : 'border-transparent text-slate-400 hover:text-slate-650'
+                tab === 'login' ? 'border-slate-805 dark:border-slate-200 text-slate-850 dark:text-slate-105' : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-300'
               }`}
             >
               Sign In
@@ -340,7 +340,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
               onClick={() => handleTabChange('signup')}
               disabled={loading}
               className={`flex-1 pb-2.5 text-center transition-colors cursor-pointer border-b-2 ${
-                tab === 'signup' ? 'border-slate-800 text-slate-850' : 'border-transparent text-slate-400 hover:text-slate-650'
+                tab === 'signup' ? 'border-slate-805 dark:border-slate-200 text-slate-850 dark:text-slate-105' : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-300'
               }`}
             >
               Create Player
@@ -354,9 +354,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           {tab === 'login' && (
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Email address</label>
+                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Email address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                  <Mail className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                   <input
                     type="email"
                     required
@@ -364,24 +364,24 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading}
-                    className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Password</label>
+                  <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Password</label>
                   <button
                     type="button"
                     onClick={() => handleTabChange('forgot')}
-                    className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer outline-none"
+                    className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-305 transition-colors cursor-pointer outline-none"
                   >
                     Forgot?
                   </button>
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                  <Lock className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                   <input
                     type="password"
                     required
@@ -389,7 +389,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading}
-                    className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                   />
                 </div>
               </div>
@@ -408,9 +408,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           {tab === 'signup' && (
             <form onSubmit={handleSignUp} className="space-y-3.5">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Username / Display Name</label>
+                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Username / Display Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                  <User className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                   <input
                     type="text"
                     required
@@ -418,15 +418,15 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     disabled={loading}
-                    className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Email address</label>
+                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Email address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                  <Mail className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                   <input
                     type="email"
                     required
@@ -434,16 +434,16 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading}
-                    className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Password</label>
+                  <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Password</label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                    <Lock className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                     <input
                       type="password"
                       required
@@ -451,15 +451,15 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={loading}
-                      className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                      className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Confirm Match</label>
+                  <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Confirm Match</label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                    <Lock className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                     <input
                       type="password"
                       required
@@ -467,7 +467,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       disabled={loading}
-                      className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                      className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                     />
                   </div>
                 </div>
@@ -481,9 +481,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                   disabled={loading}
-                  className="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-650 focus:ring-indigo-500 cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-indigo-650 focus:ring-indigo-500 cursor-pointer"
                 />
-                <label htmlFor="agree-checkbox" className="text-[11px] text-slate-500 leading-relaxed cursor-pointer select-none">
+                <label htmlFor="agree-checkbox" className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed cursor-pointer select-none">
                   I agree to the{' '}
                   <button
                     type="button"
@@ -492,7 +492,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       setTermsPrivacyTab('terms');
                       setTermsPrivacyOpen(true);
                     }}
-                    className="text-indigo-600 hover:text-indigo-800 underline inline hover:no-underline font-semibold cursor-pointer"
+                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-805 dark:hover:text-indigo-300 underline inline hover:no-underline font-semibold cursor-pointer whitespace-nowrap"
                   >
                     Terms of Service
                   </button>
@@ -504,7 +504,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       setTermsPrivacyTab('privacy');
                       setTermsPrivacyOpen(true);
                     }}
-                    className="text-emerald-600 hover:text-emerald-800 underline inline hover:no-underline font-semibold cursor-pointer"
+                    className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 underline inline hover:no-underline font-semibold cursor-pointer whitespace-nowrap"
                   >
                     Privacy Policy
                   </button>
@@ -525,9 +525,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           {tab === 'forgot' && (
             <form onSubmit={handleForgotPassword} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 block">Email address</label>
+                <label className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">Email address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350" />
+                  <Mail className="absolute left-3 top-2.5 w-4.5 h-4.5 text-slate-350 dark:text-slate-500" />
                   <input
                     type="email"
                     required
@@ -535,7 +535,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading}
-                    className="w-full pl-10 pr-4 py-2 border border-slate-200 bg-[#fbfcfd] focus:bg-white rounded-lg text-sm text-slate-800 placeholder-slate-350 outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-[#fbfcfd] dark:bg-slate-800/40 focus:bg-white dark:focus:bg-slate-800 rounded-lg text-sm text-slate-800 dark:text-slate-105 placeholder-slate-350 dark:placeholder-slate-500 outline-none focus:ring-1 focus:ring-slate-400 dark:focus:ring-slate-600 transition-all font-mono"
                   />
                 </div>
               </div>
@@ -545,7 +545,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                   type="button"
                   onClick={() => handleTabChange('login')}
                   disabled={loading}
-                  className="flex-1 py-2.5 border border-slate-200 text-slate-650 hover:bg-slate-50 font-mono text-xs uppercase tracking-widest font-bold rounded-lg transition-colors cursor-pointer"
+                  className="flex-1 py-2.5 border border-slate-200 dark:border-slate-700 text-slate-655 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 font-mono text-xs uppercase tracking-widest font-bold rounded-lg transition-colors cursor-pointer"
                 >
                   Back
                 </button>
@@ -564,10 +564,10 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
             <>
               <div className="relative my-3">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-100"></div>
+                  <div className="w-full border-t border-slate-100 dark:border-slate-800"></div>
                 </div>
                 <div className="relative flex justify-center text-[10px] uppercase font-mono tracking-wider font-bold">
-                  <span className="bg-white px-3 text-slate-400">or continue with</span>
+                  <span className="bg-white dark:bg-[#151f32] px-3 text-slate-400 dark:text-slate-500">or continue with</span>
                 </div>
               </div>
 
@@ -575,7 +575,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full py-2 border border-slate-200 text-slate-700 hover:bg-slate-50 font-mono text-xs uppercase tracking-widest font-bold rounded-lg active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2 border border-slate-200 dark:border-slate-700 text-slate-705 dark:text-slate-205 hover:bg-slate-50 dark:hover:bg-slate-800 font-mono text-xs uppercase tracking-widest font-bold rounded-lg active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <span className="text-red-500 font-extrabold text-sm font-sans">G</span>
                 <span className="text-amber-500 font-extrabold text-sm font-sans">o</span>

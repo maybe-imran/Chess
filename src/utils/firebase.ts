@@ -65,6 +65,7 @@ export interface UserProfile {
     gamesLost: number;
     gamesDrawn: number;
   };
+  themePreference?: 'light' | 'dark';
 }
 
 export interface ChatMessage {
@@ -244,3 +245,16 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
   }
   return null;
 }
+
+/**
+ * Updates the user's theme preference in Firestore
+ */
+export async function updateUserProfileTheme(userId: string, theme: 'light' | 'dark'): Promise<void> {
+  try {
+    const userRef = doc(db, 'users', userId);
+    await setDoc(userRef, { themePreference: theme }, { merge: true });
+  } catch (error) {
+    console.warn('Error updating user theme preference:', error);
+  }
+}
+

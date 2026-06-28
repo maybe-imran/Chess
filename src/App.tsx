@@ -16,7 +16,8 @@ import {
   db,
   auth,
   getUserProfile,
-  UserProfile
+  UserProfile,
+  updateUserProfileTheme
 } from './utils/firebase';
 import { doc, onSnapshot, updateDoc, runTransaction, collection, getDocs, setDoc, deleteDoc, query, where, orderBy, limit } from 'firebase/firestore';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
@@ -42,7 +43,11 @@ import {
   Pause,
   SkipBack,
   SkipForward,
-  BookOpen
+  BookOpen,
+  Sun,
+  Moon,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
 import { playChessSound, getMuteState, setMuteState } from './utils/audio';
 import { CHESS_THEMES, getSavedTheme, saveThemePreference, ChessTheme } from './utils/theme';
@@ -176,6 +181,56 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [authInitialized, setAuthInitialized] = useState(false);
+
+  // Theme selection ('light' | 'dark')
+  const [themeMode, setThemeMode] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('themePreference');
+    if (saved === 'dark' || saved === 'light') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  // Dynamic network connection state (PWA resilience requirement)
+  const [isOnline, setIsOnline] = useState(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
+
+  // Apply theme to HTML class & synchronize storage / Firestore
+  useEffect(() => {
+    const root = document.documentElement;
+    if (themeMode === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('themePreference', themeMode);
+    if (user) {
+      updateUserProfileTheme(user.uid, themeMode);
+    }
+  }, [themeMode, user]);
+
+  // Handle system preference color scheme changes
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const listener = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('themePreference')) {
+        setThemeMode(e.matches ? 'dark' : 'light');
+      }
+    };
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
+
+  // Monitor dynamic network connectivity transitions
+  useEffect(() => {
+    const goOnline = () => setIsOnline(true);
+    const goOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', goOnline);
+    window.addEventListener('offline', goOffline);
+
+    return () => {
+      window.removeEventListener('online', goOnline);
+      window.removeEventListener('offline', goOffline);
+    };
+  }, []);
 
   // Online Multiplayer Settings
   const [roomCode, setRoomCode] = useState<string>('');
@@ -401,6 +456,9 @@ export default function App() {
         const profile = await getUserProfile(currentUser.uid);
         if (profile) {
           setUserProfile(profile);
+          if (profile.themePreference === 'light' || profile.themePreference === 'dark') {
+            setThemeMode(profile.themePreference);
+          }
         } else {
           const fallbackProfile: UserProfile = {
             uid: currentUser.uid,
@@ -936,23 +994,31 @@ export default function App() {
   const isMyTurnOnline = mode === 'online' && room && !isOnlineWaiting && turn === playerColor;
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-sans flex flex-col justify-between py-6 px-4 md:px-8">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#090d16] text-slate-800 dark:text-slate-100 font-sans flex flex-col justify-between py-6 px-4 md:px-8 transition-colors duration-200">
       
       {/* Page Header and Mode Tabs */}
       <header className="max-w-5xl mx-auto w-full mb-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+        {/* Connection status warning bar */}
+        {!isOnline && (
+          <div className="mb-4 flex items-center justify-center gap-2 bg-rose-500/10 border border-rose-500/25 text-rose-500 dark:text-rose-400 py-2.5 px-4 rounded-xl text-xs font-mono select-none animate-pulse">
+            <WifiOff className="w-4 h-4 shrink-0" />
+            <span>YOU'RE OFFLINE - Real-time matchmaking, chat, and online lobbies are disabled.</span>
+          </div>
+        )}
+
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-200/60 dark:border-slate-800 pb-5">
           <div className="text-center md:text-left">
-            <h1 className="text-2xl font-light tracking-tighter text-slate-800 sm:text-3xl">
+            <h1 className="text-2xl font-light tracking-tighter text-slate-850 dark:text-slate-50 sm:text-3xl">
               MINIMAL CHESS
             </h1>
-            <p className="text-xs text-slate-400 mt-1 uppercase font-mono tracking-widest">
+            <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 uppercase font-mono tracking-widest">
               Classical rule engine
             </p>
           </div>
 
           {/* Mode Tabs AND Profile Account Menu */}
           <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
-            <div className="flex flex-wrap justify-center items-center bg-slate-100 p-1 rounded-lg border border-slate-200">
+            <div className="flex flex-wrap justify-center items-center bg-slate-100 dark:bg-slate-900 p-1 rounded-lg border border-slate-200 dark:border-s-slate-800 dark:border-slate-800">
               <button
                 onClick={() => {
                   if (mode === 'online' && room) handleLeaveRoom();
@@ -961,8 +1027,8 @@ export default function App() {
                 }}
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-widest font-semibold rounded-md transition-all cursor-pointer ${
                   mode === 'local'
-                    ? 'bg-white text-slate-800 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-xs'
+                    : 'text-slate-500 dark:text-slate-450 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
               >
                 <Users className="w-3.5 h-3.5" />
@@ -976,8 +1042,8 @@ export default function App() {
                 }}
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-widest font-semibold rounded-md transition-all cursor-pointer ${
                   mode === 'computer'
-                    ? 'bg-white text-slate-800 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-xs'
+                    : 'text-slate-500 dark:text-slate-450 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
               >
                 <Laptop className="w-3.5 h-3.5" />
@@ -985,14 +1051,18 @@ export default function App() {
               </button>
               <button
                 onClick={() => {
-                  // Keep room or let them customize
+                  if (!isOnline) return;
                   setMode('online');
                   setOnlineJoinError('');
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-widest font-semibold rounded-md transition-all cursor-pointer ${
+                disabled={!isOnline}
+                title={!isOnline ? "Unavailable offline" : "Play Online"}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-widest font-semibold rounded-md transition-all ${
+                  !isOnline ? 'opacity-35 cursor-not-allowed' : 'cursor-pointer'
+                } ${
                   mode === 'online'
-                    ? 'bg-white text-slate-800 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-xs'
+                    : 'text-slate-500 dark:text-slate-450 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
               >
                 <Globe className="w-3.5 h-3.5" />
@@ -1005,14 +1075,23 @@ export default function App() {
                 }}
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-widest font-semibold rounded-md transition-all cursor-pointer ${
                   mode === 'learn'
-                    ? 'bg-white text-slate-800 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 shadow-xs'
+                    : 'text-slate-500 dark:text-slate-450 hover:text-slate-800 dark:hover:text-slate-200'
                 }`}
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>Learn</span>
               </button>
             </div>
+
+            {/* THEME TOGGLE BUTTON */}
+            <button
+              onClick={() => setThemeMode(themeMode === 'light' ? 'dark' : 'light')}
+              title={`Switch to ${themeMode === 'light' ? 'Dark' : 'Light'} Mode`}
+              className="p-2 border border-slate-200 dark:border-slate-800 hover:bg-slate-55 dark:hover:bg-slate-800 bg-white dark:bg-[#151f32] text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 rounded-lg transition-all cursor-pointer shadow-3xs"
+            >
+              {themeMode === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4 text-amber-400" />}
+            </button>
 
             {/* PROFILE / ACCOUNT CONTROLS */}
             <div className="relative">

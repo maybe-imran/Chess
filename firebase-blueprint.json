@@ -20,6 +20,10 @@
         "statsPlaceholder": {
           "type": "object",
           "description": "Placeholder stats for games played/won/lost"
+        },
+        "themePreference": {
+          "type": "string",
+          "description": "Theme mode selection for dark or light mode"
         }
       },
       "required": ["uid", "username", "createdAt"]
@@ -61,9 +65,15 @@
         },
         "creatorId": {
           "type": "string"
+        },
+        "currentTurn": {
+          "type": "string"
+        },
+        "history": {
+          "type": "array"
         }
       },
-      "required": ["roomId", "fen", "status", "moveCount"]
+      "required": ["roomId", "fen", "status", "moveCount", "currentTurn"]
     },
     "MatchmakingQueue": {
       "title": "MatchmakingQueue",

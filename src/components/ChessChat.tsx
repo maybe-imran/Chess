@@ -158,11 +158,11 @@ export const ChessChat: React.FC<ChessChatProps> = ({
   });
 
   return (
-    <div className="w-full md:w-[280px] flex flex-col bg-white rounded-lg border border-slate-200/80 shadow-3xs select-none shrink-0 min-h-[300px] max-h-[512px] transition-all relative font-sans text-slate-800">
+    <div className="w-full md:w-[280px] flex flex-col bg-white dark:bg-[#151f32] rounded-lg border border-slate-200/80 dark:border-slate-800 shadow-3xs select-none shrink-0 min-h-[300px] max-h-[512px] transition-all relative font-sans text-slate-800 dark:text-slate-100">
       
       {/* Header bar */}
-      <div className="flex items-center justify-between p-3 border-b border-slate-100 bg-slate-50/50 rounded-t-lg">
-        <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600">
+      <div className="flex items-center justify-between p-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 rounded-t-lg">
+        <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
           <MessageSquare className="w-3.5 h-3.5 text-indigo-600" />
           <span>Game Chat</span>
           {isCollapsed && unreadCount > 0 && (
@@ -211,7 +211,7 @@ export const ChessChat: React.FC<ChessChatProps> = ({
             className="flex-grow flex flex-col min-h-[250px] overflow-hidden"
           >
             {/* Messages Stream */}
-            <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2.5 max-h-[380px] scrollbar-thin bg-white">
+            <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2.5 max-h-[380px] scrollbar-thin bg-white dark:bg-[#151f32]">
               {visibleMessages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center my-auto py-10 text-slate-350">
                   <Clock className="w-5 h-5 stroke-[1.5] mb-1 text-slate-300" />
@@ -244,7 +244,7 @@ export const ChessChat: React.FC<ChessChatProps> = ({
                       <div className={`px-2.5 py-1.5 rounded-lg text-xs leading-relaxed break-words border ${
                         isMe 
                           ? 'bg-indigo-600 text-white border-indigo-700 rounded-tr-none' 
-                          : 'bg-slate-100 text-slate-800 border-slate-200/60 rounded-tl-none'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 border-slate-200/60 dark:border-slate-700 rounded-tl-none'
                       }`}>
                         {msg.text}
                       </div>
@@ -264,7 +264,7 @@ export const ChessChat: React.FC<ChessChatProps> = ({
             {/* Input field and send button */}
             <form 
               onSubmit={handleSendMessage} 
-              className="p-2.5 border-t border-slate-100 bg-slate-50 flex items-center gap-2"
+              className="p-2.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-center gap-2"
             >
               <input
                 type="text"
@@ -273,7 +273,7 @@ export const ChessChat: React.FC<ChessChatProps> = ({
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={handleKeyPress}
-                className="flex-1 px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-350 text-slate-805"
+                className="flex-1 px-3 py-1.5 text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-350 text-slate-805 dark:text-slate-100"
               />
               <button
                 type="submit"
@@ -289,39 +289,39 @@ export const ChessChat: React.FC<ChessChatProps> = ({
 
       {/* Report Modal */}
       {showReportModal && (
-        <div className="absolute inset-0 z-50 bg-slate-900/40 backdrop-blur-3xs flex items-center justify-center p-3 rounded-lg">
-          <div className="w-full bg-white border border-slate-200 rounded-lg p-3.5 shadow-md flex flex-col gap-3 font-sans animate-fade-in">
+        <div className="absolute inset-0 z-50 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-3xs flex items-center justify-center p-3 rounded-lg">
+          <div className="w-full bg-white dark:bg-[#1f2d44] border border-slate-200 dark:border-slate-800 rounded-lg p-3.5 shadow-md flex flex-col gap-3 font-sans animate-fade-in text-slate-805 dark:text-slate-100">
             {isReportSubmitted ? (
-              <div className="flex flex-col items-center justify-center py-6 text-center gap-2">
+               <div className="flex flex-col items-center justify-center py-6 text-center gap-2">
                 <CheckCircle className="w-8 h-8 text-emerald-500 animate-bounce" />
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">Report Logged</h4>
-                <p className="text-[10px] text-slate-500 leading-normal font-medium">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100">Report Logged</h4>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal font-medium">
                   Flagged {opponentName} for investigation.
                 </p>
               </div>
             ) : (
               <>
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
-                  <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-600">
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5">
+                  <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500">
                     <AlertTriangle className="w-4 h-4" />
                     <span>Report Player</span>
                   </span>
                   <button 
                     onClick={() => setShowReportModal(false)}
-                    className="p-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    className="p-1 rounded text-slate-400 hover:text-slate-650 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <div className="text-[11px] text-slate-500 leading-relaxed font-sans">
-                  You are filing a safe-gaming audit on <span className="font-semibold text-slate-800">{opponentName}</span>. Choose reason:
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                  You are filing a safe-gaming audit on <span className="font-semibold text-slate-800 dark:text-slate-200">{opponentName}</span>. Choose reason:
                 </div>
 
                 <select
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value)}
-                  className="w-full text-xs p-1.5 border border-slate-200 bg-white rounded-md focus:outline-none"
+                  className="w-full text-xs p-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-slate-100 rounded-md focus:outline-none"
                 >
                   <option value="Abusive Language">Abusive Language</option>
                   <option value="Cheating / Engine Use">Cheating / Engine Use</option>
@@ -333,7 +333,7 @@ export const ChessChat: React.FC<ChessChatProps> = ({
                 <div className="flex gap-2 justify-end pt-1">
                   <button
                     onClick={() => setShowReportModal(false)}
-                    className="px-2.5 py-1.5 text-[9px] font-mono font-bold uppercase tracking-wider text-slate-550 border border-slate-250 hover:bg-slate-50 rounded"
+                    className="px-2.5 py-1.5 text-[9px] font-mono font-bold uppercase tracking-wider text-slate-550 dark:text-slate-300 border border-slate-250 dark:border-slate-705 hover:bg-slate-50 dark:hover:bg-slate-800 rounded"
                   >
                     Cancel
                   </button>

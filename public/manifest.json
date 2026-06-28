@@ -1,0 +1,18 @@
+{
+  "short_name": "Chess",
+  "name": "Chess Game",
+  "description": "Play interactive, beautiful 2D Chess online with friends, matchmaking, or against the computer. Ad-free, fast, and secure.",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "theme_color": "#121829",
+  "display": "standalone",
+  "orientation": "portrait-primary"
+}

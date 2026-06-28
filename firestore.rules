@@ -49,8 +49,9 @@ service cloud.firestore {
         && data.statsPlaceholder.gamesWon is int && data.statsPlaceholder.gamesWon >= 0
         && data.statsPlaceholder.gamesLost is int && data.statsPlaceholder.gamesLost >= 0
         && data.statsPlaceholder.gamesDrawn is int && data.statsPlaceholder.gamesDrawn >= 0
+        && (!('themePreference' in data) || (data.themePreference is string && (data.themePreference == 'light' || data.themePreference == 'dark')))
         && data.keys().hasAll(['uid', 'username', 'createdAt', 'statsPlaceholder'])
-        && data.keys().size() == 4;
+        && (data.keys().size() == 4 || (data.keys().size() == 5 && 'themePreference' in data));
     }
 
     // -------------------------------------------------------------

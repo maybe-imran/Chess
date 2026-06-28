@@ -44,7 +44,7 @@ const PieceDemoCard: React.FC<PieceDemoCardProps> = ({ name, desc, fen, activeTh
   const highlightSquares = history.length > 0 ? [history[history.length - 1].from, history[history.length - 1].to] : [];
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-3xs flex flex-col justify-between items-center gap-3">
+    <div className="bg-white dark:bg-[#151f32] border border-slate-200/80 dark:border-slate-800 rounded-xl p-4 shadow-3xs flex flex-col justify-between items-center gap-3">
       <div className="text-center w-full">
         <h3 className="text-xs font-bold font-mono uppercase tracking-widest text-slate-500 mb-1">{name}</h3>
         <p className="text-xs text-slate-600 leading-relaxed min-h-[40px] text-center px-1">{desc}</p>
@@ -62,7 +62,7 @@ const PieceDemoCard: React.FC<PieceDemoCardProps> = ({ name, desc, fen, activeTh
 
       <button
         onClick={handleReset}
-        className="w-full py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-mono uppercase font-bold tracking-widest rounded transition-all cursor-pointer"
+        className="w-full py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-605 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[10px] font-mono uppercase font-bold tracking-widest rounded transition-all cursor-pointer"
       >
         🔄 Reset Position
       </button>
@@ -203,16 +203,16 @@ export const LearnToPlay: React.FC<LearnToPlayProps> = ({ onBack, activeTheme })
   };
 
   return (
-    <div className="w-full flex flex-col items-center animate-fade-in text-slate-800">
+    <div className="w-full flex flex-col items-center animate-fade-in text-slate-800 dark:text-slate-100 font-sans">
       {/* Header Bar */}
-      <div className="w-full max-w-[1024px] flex items-center justify-between border-b border-slate-200/60 pb-4 mb-6">
+      <div className="w-full max-w-[1024px] flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+          <span className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xl">
             <BookOpen className="w-5 h-5" />
           </span>
           <div>
-            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Learn to Play Chess</h2>
-            <p className="text-[10px] text-slate-400 font-mono">Master piece movements, tactics and endgames</p>
+            <h2 className="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-widest">Learn to Play Chess</h2>
+            <p className="text-[10px] text-slate-400 dark:text-slate-505 font-mono">Master piece movements, tactics and endgames</p>
           </div>
         </div>
 
@@ -226,13 +226,13 @@ export const LearnToPlay: React.FC<LearnToPlayProps> = ({ onBack, activeTheme })
       </div>
 
       {/* Mode Sub tabs selector */}
-      <div className="flex border-b border-slate-200 w-full max-w-[1024px] mb-6 font-mono text-xs text-slate-500 uppercase tracking-wider">
+      <div className="flex border-b border-slate-200 dark:border-slate-800 w-full max-w-[1024px] mb-6 font-mono text-xs text-slate-505 dark:text-slate-400 uppercase tracking-wider">
         <button
           onClick={() => setActiveTab('moves')}
           className={`flex-1 text-center py-2.5 border-b-2 font-bold cursor-pointer transition-all ${
             activeTab === 'moves'
-              ? 'border-indigo-600 text-indigo-600'
-              : 'border-transparent hover:text-slate-700 hover:border-slate-300'
+              ? 'border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400'
+              : 'border-transparent hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-350 dark:hover:border-slate-700'
           }`}
         >
           🎮 How Pieces Move (Interactive)
@@ -241,8 +241,8 @@ export const LearnToPlay: React.FC<LearnToPlayProps> = ({ onBack, activeTheme })
           onClick={() => setActiveTab('lessons')}
           className={`flex-1 text-center py-2.5 border-b-2 font-bold cursor-pointer transition-all ${
             activeTab === 'lessons'
-              ? 'border-indigo-600 text-indigo-600'
-              : 'border-transparent hover:text-slate-700 hover:border-slate-300'
+              ? 'border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400'
+              : 'border-transparent hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-350 dark:hover:border-slate-700'
           }`}
         >
           📚 Practical Lessons (Tactics)
@@ -253,9 +253,9 @@ export const LearnToPlay: React.FC<LearnToPlayProps> = ({ onBack, activeTheme })
       <div className="w-full max-w-[1024px]">
         {activeTab === 'moves' ? (
           <div className="space-y-6">
-            <div className="bg-indigo-50/50 border border-indigo-100 rounded-xl p-4 text-center">
+            <div className="bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-4 text-center">
               <span className="text-xl mr-2">💡</span>
-              <span className="text-xs text-slate-600 font-medium">
+              <span className="text-xs text-slate-605 dark:text-slate-300 font-semibold font-sans">
                 Click any chess piece below to highlight its legal squares! Then click a highlighted dot to see it glide there in real-time.
               </span>
             </div>
@@ -304,7 +304,7 @@ export const LearnToPlay: React.FC<LearnToPlayProps> = ({ onBack, activeTheme })
           <div className="flex flex-col lg:flex-row gap-6 items-stretch">
             {/* Category list panels */}
             <div className="w-full lg:w-[260px] flex flex-col gap-2.5">
-              <h3 className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest px-1">Lesson Categories</h3>
+              <h3 className="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Lesson Categories</h3>
               {categories.map((cat, idx) => (
                 <button
                   key={cat.id}
@@ -312,10 +312,10 @@ export const LearnToPlay: React.FC<LearnToPlayProps> = ({ onBack, activeTheme })
                   className={`flex items-center gap-3 p-3 rounded-xl border text-left cursor-pointer transition-all ${
                     activeCategoryIdx === idx
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                      : 'bg-white text-slate-600 border-slate-205 hover:bg-slate-50'
+                      : 'bg-white dark:bg-[#151f32] text-slate-600 dark:text-slate-300 border-slate-205 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900'
                   }`}
                 >
-                  <span className={`${activeCategoryIdx === idx ? 'text-white' : 'text-slate-450'}`}>
+                  <span className={`${activeCategoryIdx === idx ? 'text-white' : 'text-slate-450 dark:text-slate-400'}`}>
                     {cat.icon}
                   </span>
                   <span className="text-xs font-semibold">{cat.name}</span>

@@ -1,1 +1,60 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary-bg: var(--primary-bg);
+  --color-secondary-bg: var(--secondary-bg);
+  --color-card-bg: var(--card-bg);
+  --color-card-hover: var(--card-hover);
+  --color-text-main: var(--text-main);
+  --color-text-sub: var(--text-sub);
+  --color-text-muted: var(--text-muted);
+  --color-border-main: var(--border-main);
+  --color-tab-bg: var(--tab-bg);
+  --color-button-bg: var(--button-bg);
+}
+
+:root {
+  --primary-bg: #f8fafc;        /* slate-50 */
+  --secondary-bg: #f1f5f9;      /* slate-100 */
+  --card-bg: #ffffff;           /* white */
+  --card-hover: #f1f5f9;        /* slate-100 fallback */
+  --text-main: #0f172a;         /* slate-900 */
+  --text-sub: #334155;          /* slate-700 */
+  --text-muted: #64748b;        /* slate-500 */
+  --border-main: rgba(226, 232, 240, 0.8); /* slate-200 */
+  --tab-bg: #f1f5f9;            /* slate-100 */
+  --button-bg: #ffffff;
+}
+
+.dark {
+  --primary-bg: #090d16;        /* midnight slate */
+  --secondary-bg: #0f172a;      /* slate-900 */
+  --card-bg: #151f32;           /* slate-800 lighter */
+  --card-hover: #1e293b;        /* slate-800 */
+  --text-main: #f8fafc;         /* slate-50 */
+  --text-sub: #cbd5e1;          /* slate-300 */
+  --text-muted: #64748b;        /* slate-500 */
+  --border-main: rgba(30, 41, 59, 0.9);   /* slate-800 */
+  --tab-bg: #0f172a;            /* slate-900 */
+  --button-bg: #1e293b;
+}
+
+/* Custom scrollbars */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.2);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.4);
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
